@@ -8,10 +8,14 @@ var trivia_data = {
 
 };
 var answerholder = new Array();
-
+var question =0;
+var time=30;
+var gamescreen = true;
+var clockrunning= false;
 //append the question and answers to the display. make this in such a way
 //that the picked answer can be crosse referenced with the real answer
 //later on
+
 for(let i=1;i<=trivia_data.length;i++)
 {
     
@@ -20,11 +24,71 @@ for(let i=1;i<=trivia_data.length;i++)
     answerholder.push(Object.entries(trivia_data)[i][1]);
 }
 
+//draw choices function
+function draw_choices()
+{   for(let i=0;i<answerholder[question].length;i++)
+     {   var ansdiv = $("<div>");
+         let temp = answerholder[question][i];
+         ansdiv.addClass("ansdiv");
+         ansdiv.attr("data-number",i);
+         ansdiv.html(temp);
+         $("#gamebox").append(ansdiv);
+         $("#gamebox").append("<br>");
+         
+     }
+}
+
+
+function start_game()
+{$("#gamebox").empty();
+    draw_time();
+draw_question();
+draw_choices();
+if(!clockrunning){run();clockrunning=true;}
+gamescreen=true;
+time=30;
+}
+
+start_game();
+
+//draw questions function
+function draw_question(){
+    var qdiv = $("<div>");
+    qdiv.addClass("qdiv");
+    qdiv.text(Object.entries(trivia_data)[question+1][0]);
+    $("#gamebox").append(qdiv);
+}
+
 //make a timer that can take in variable time amounts
+function run()
+{   interval=setInterval(function(){
+    $(".timediv").html(--time);
+    if(time==0){if(gamescreen==true){losescreen();}else{question++;start_game();}
+}},1000)
+
+}
+
 //draw the time to the correct part of the display
+function draw_time()
+{   timediv=$("<div>");
+    timediv.addClass("timediv");
+    timediv.html(time);
+    $("#gamebox").append(timediv)
+
+}   
+
 
 //when time==0; fail screen or if some boolean== true move on to next
 //question and reset boolean to false.
+function losescreen()
+{   time=6;
+    gamescreen=false;
+    $("#gamebox").empty();
+    $("#gamebox").html("YOU LOSE");
+
+
+}
+
 
 
 //
@@ -32,3 +96,5 @@ for(let i=1;i<=trivia_data.length;i++)
 //function to check guessed with answerholder[i][0*winning answer*];
 //win function() increment win; display stuff; start 5 sec timer for next question
 //lose function() increment loss; display stuff; ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+function 
