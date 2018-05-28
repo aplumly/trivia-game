@@ -1,7 +1,7 @@
 //put dataset here in object datatype
 var trivia_data = {
     "length":4,
-    "question1": ["answer to question 1","fake answer to question1","loloe","hello"],
+    "what is a group of turtles called?": ["a bale","a shell","a flock","a school"],
     "question2": ["answer to question 2","fake answer to question2","bepbop","henlo"],
     "question3": ["answer to question 3","fake answer to question3","bopbee","heler"],
     "question4": ["answer to question 4","fake answer to question4","m00p","heyro"]
@@ -40,13 +40,16 @@ function draw_choices()
 
 
 function start_game()
-{$("#gamebox").empty();
+{
+   time=30; 
+    $("#gamebox").empty();
     draw_time();
 draw_question();
 draw_choices();
 if(!clockrunning){run();clockrunning=true;}
 gamescreen=true;
-time=30;
+
+create_clickevent();
 }
 
 start_game();
@@ -97,4 +100,32 @@ function losescreen()
 //win function() increment win; display stuff; start 5 sec timer for next question
 //lose function() increment loss; display stuff; ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-function 
+function create_clickevent(){
+$(".ansdiv").on("click",function(){
+    guess= this.getAttribute("data-number")
+    if(guess==0){win();}else{lose();}
+    console.log(guess);
+
+});
+
+
+}
+
+
+
+function win()
+{   gamescreen=false;
+    $("#gamebox").empty();
+    $("#gamebox").text("you win");
+    time=6;
+
+
+}
+
+function lose()
+{   gamescreen=false;
+    $("#gamebox").empty();
+    $("#gamebox").text("you lose");
+    time=6;
+
+}
