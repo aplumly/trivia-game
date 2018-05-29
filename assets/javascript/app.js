@@ -71,7 +71,7 @@ function endscreen()
 {   endgame=$("<div>");
     endgame.addClass("endgame");
     gamescreen=false;
-    let temp = "<h3>game over</h3><br><br><h4>wins: "+wins+"</h4><br><h4>"+losses+"</h4>losses: ";
+    let temp = "<h3>game over</h3><br><br><h4>wins: "+wins+"</h4><br><h4>losses: "+losses+"</h4>";
     endgame.html(temp);
     $("#gamebox").append(endgame);
 
@@ -109,7 +109,7 @@ function losescreen()
 {   time=6;
     gamescreen=false;
     $("#gamebox").empty();
-    $("#gamebox").html("YOU LOSE");
+    $("#gamebox").html("<h3>YOU LOSE</h3>");
 
 
 }
