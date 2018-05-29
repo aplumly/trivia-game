@@ -12,9 +12,17 @@ var question =0;
 var time=30;
 var gamescreen = true;
 var clockrunning= false;
+var wins=0;
+var losses=0;
+
 //append the question and answers to the display. make this in such a way
 //that the picked answer can be crosse referenced with the real answer
 //later on
+
+function coin()
+{
+    return Math.floor(Math.random()*2);
+}
 
 for(let i=1;i<=trivia_data.length;i++)
 {
@@ -32,42 +40,51 @@ function draw_choices()
          ansdiv.addClass("ansdiv");
          ansdiv.attr("data-number",i);
          ansdiv.html(temp);
-         $("#gamebox").append(ansdiv);
-         $("#gamebox").append("<br>");
-         
+         if(coin())
+         {$("#gamebox").append(ansdiv);}
+         else{$("#gamebox").prepend(ansdiv);}
      }
 }
 
+function draw_title()
+{   titlediv=$("<div>");
+    titlediv.html('<h3 id="title">TRIVIA</h3>');
+    $("#gamebox").prepend(titlediv);
+}
 
 function start_game()
 {
-   time=30; 
+    time=30; 
     $("#gamebox").empty();
+    draw_choices();
     draw_time();
-draw_question();
-draw_choices();
-if(!clockrunning){run();clockrunning=true;}
+    draw_question();
+    draw_title();
+    if(!clockrunning){run();clockrunning=true;}
 gamescreen=true;
 
 create_clickevent();
 }
 
 start_game();
-
+function endscreen()
+{
+    
+}
 //draw questions function
 function draw_question(){
     var qdiv = $("<div>");
     qdiv.addClass("qdiv");
     qdiv.text(Object.entries(trivia_data)[question+1][0]);
-    $("#gamebox").append(qdiv);
+    $("#gamebox").prepend(qdiv);
 }
 
 //make a timer that can take in variable time amounts
 function run()
 {   interval=setInterval(function(){
     $(".timediv").html(--time);
-    if(time==0){if(gamescreen==true){losescreen();}else{question++;start_game();}
-}},1000)
+    if(time==0){if(question==trivia_data.length+1){endscreen();}else{if(gamescreen==true){losescreen();}else{question++;start_game();}
+}}},1000)
 
 }
 
@@ -76,7 +93,7 @@ function draw_time()
 {   timediv=$("<div>");
     timediv.addClass("timediv");
     timediv.html(time);
-    $("#gamebox").append(timediv)
+    $("#gamebox").prepend(timediv);
 
 }   
 
@@ -107,8 +124,6 @@ $(".ansdiv").on("click",function(){
     console.log(guess);
 
 });
-
-
 }
 
 
@@ -116,16 +131,23 @@ $(".ansdiv").on("click",function(){
 function win()
 {   gamescreen=false;
     $("#gamebox").empty();
-    $("#gamebox").text("you win");
+    $("#gamebox").html('<br><br><br><h4 class="winlose">CORRECT</h4>');
+    draw_title();
     time=6;
-
-
+    wins++;
 }
 
 function lose()
-{   gamescreen=false;
+{   
+    gamescreen=false;
     $("#gamebox").empty();
-    $("#gamebox").text("you lose");
+    $("#gamebox").html('<br><br><br><h4 class="winlose">INCORRECT</h4>');
+    draw_title();
     time=6;
+    losses++;
 
 }
+
+//if question>#ofquestions {display endgame}
+
+//shuffle the divs somehow
