@@ -68,8 +68,13 @@ create_clickevent();
 
 start_game();
 function endscreen()
-{
-    
+{   endgame=$("<div>");
+    endgame.addClass("endgame");
+    gamescreen=false;
+    let temp = "<h3>game over</h3><br><br><h4>wins: "+wins+"</h4><br><h4>"+losses+"</h4>losses: ";
+    endgame.html(temp);
+    $("#gamebox").append(endgame);
+
 }
 //draw questions function
 function draw_question(){
@@ -83,7 +88,7 @@ function draw_question(){
 function run()
 {   interval=setInterval(function(){
     $(".timediv").html(--time);
-    if(time==0){if(question==trivia_data.length+1){endscreen();}else{if(gamescreen==true){losescreen();}else{question++;start_game();}
+    if(time==0){if(question==trivia_data.length){endscreen();}else{if(gamescreen==true){losescreen();}else{question++;start_game();}
 }}},1000)
 
 }
@@ -149,5 +154,3 @@ function lose()
 }
 
 //if question>#ofquestions {display endgame}
-
-//shuffle the divs somehow
