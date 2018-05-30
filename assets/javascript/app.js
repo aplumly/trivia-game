@@ -77,6 +77,19 @@ function endscreen()
     endgame.html(temp);
     $("#gamebox").append(endgame);
 
+    let ansdiv = $("<div>");
+    ansdiv.addClass("ansdiv");
+    ansdiv.text("play again?");
+    $("#gamebox").append(ansdiv);
+
+    $(".ansdiv").on("click",function(){
+        time=30;
+        question=0;
+        wins=0;
+        losses=0;
+        start_game();
+    });
+
 }
 //draw questions function
 function draw_question(){
