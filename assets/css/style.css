@@ -35,10 +35,11 @@ font-size:25px;
 .qdiv{font-size:40px;
 text-align: center;
 margin:5%;
+margin-bottom:2%;
 }
-h4{text-align:center;}
+h4{text-align:center;font-size:40px;}
 
 .timediv{text-align: center;
-    padding:3%;
+    padding:1%;
 font-size:20px;}
 

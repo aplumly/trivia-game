@@ -2,9 +2,9 @@
 var trivia_data = {
     "length":4,
     "what is a group of turtles called?": ["a bale","a shell","a flock","a school"],
-    "question2": ["answer to question 2","fake answer to question2","bepbop","henlo"],
-    "question3": ["answer to question 3","fake answer to question3","bopbee","heler"],
-    "question4": ["answer to question 4","fake answer to question4","m00p","heyro"]
+    "this mammal is known for its sharp, venemous stinger": ["platypus","rhinocerous","unicorn","wasp"],
+    "how much wood does a woodchuck chuck?": ["a woodchuck doesn't chuck wood","7","100","over 9000"],
+    "this bird is known to mimic other birds songs in an attempt to lure and eat them": ["mocking bird","finch","penguin","raven"]
 
 };
 var answerholder = new Array();
@@ -18,7 +18,8 @@ var losses=0;
 //append the question and answers to the display. make this in such a way
 //that the picked answer can be crosse referenced with the real answer
 //later on
-
+function calculate_percentage(losses,total) 
+{   return ((losses*100)/total);}
 function coin()
 {
     return Math.floor(Math.random()*2);
@@ -68,10 +69,11 @@ create_clickevent();
 
 start_game();
 function endscreen()
-{   endgame=$("<div>");
+{   $("#gamebox").empty();
+    endgame=$("<div>");
     endgame.addClass("endgame");
     gamescreen=false;
-    let temp = "<h3>game over</h3><br><br><h4>wins: "+wins+"</h4><br><h4>losses: "+losses+"</h4>";
+    let temp = "<h3>game over</h3><br><br><h4>wins: "+wins+"</h4><br><h4>losses: "+losses+"</h4><br><h4>"+calculate_percentage(wins,trivia_data.length)+"%</h4>";
     endgame.html(temp);
     $("#gamebox").append(endgame);
 
@@ -88,7 +90,7 @@ function draw_question(){
 function run()
 {   interval=setInterval(function(){
     $(".timediv").html(--time);
-    if(time==0){if(question==trivia_data.length){endscreen();}else{if(gamescreen==true){losescreen();}else{question++;start_game();}
+    if(time==0){if(question==trivia_data.length-1){endscreen();}else{if(gamescreen==true){losescreen();}else{question++;start_game();}
 }}},1000)
 
 }
@@ -109,8 +111,8 @@ function losescreen()
 {   time=6;
     gamescreen=false;
     $("#gamebox").empty();
-    $("#gamebox").html("<h3>YOU LOSE</h3>");
-
+    $("#gamebox").html("<h3>TIMEOUT</h3>");
+    losses++;
 
 }
 
@@ -146,7 +148,8 @@ function lose()
 {   
     gamescreen=false;
     $("#gamebox").empty();
-    $("#gamebox").html('<br><br><br><h4 class="winlose">INCORRECT</h4>');
+    let temp = '<br><br><br><h4 class="winlose">INCORRECT<br><br>THE ANSWER WAS: '+answerholder[question][0]+'<br></h4>';
+    $("#gamebox").html(temp);
     draw_title();
     time=6;
     losses++;
