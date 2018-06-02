@@ -5,7 +5,7 @@ var trivia_data = {
     "this mammal is known for its sharp, venemous stinger": ["platypus","rhinocerous","unicorn","wasp"],
     "how much wood does a woodchuck chuck?": ["a woodchuck doesn't chuck wood","7","100","over 9000"],
     "this bird is known to mimic other birds songs in an attempt to lure and eat them": ["mocking bird","finch","penguin","raven"]
-
+    
 };
 var answerholder = new Array();
 var question =0;
@@ -103,7 +103,13 @@ function draw_question(){
 function run()
 {   interval=setInterval(function(){
     $(".timediv").html(--time);
-    if(time==0){if(question==trivia_data.length-1){endscreen();}else{if(gamescreen==true){losescreen();}else{question++;start_game();}
+    if(time==0){
+        if(question==trivia_data.length-1){if(gamescreen==true){losescreen();}else{
+            endscreen();}}
+            else{
+                if(gamescreen==true){
+                losescreen();}else{
+                    question++;start_game();}
 }}},1000)
 
 }
